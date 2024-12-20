@@ -1,4 +1,5 @@
 from typing import Any
+import os
 from pytubefix import YouTube
 from moviepy.editor import VideoFileClip, AudioFileClip
 
@@ -33,6 +34,9 @@ class YouTubeDownload(Observer, Subscriber):
 
         # 프로세스 로그 초기화 후 다운로드 + 다 끝난 후 삭제
         print("\n영상 합성 시작")
+        if not os.path.exists(f"{self.path}/result"):
+            os.makedirs(f"{self.path}/result")
+
         self.logger.reset_data()
         videoFileClip.write_videofile(f"{self.path}/result/{self.yt.title}.mp4", logger=self.logger)
         audioFileClip.close()
